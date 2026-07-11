@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aung Myat Phyo</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --bg:#000;
+  --bg2:#0a0a0a;
+  --border:#1c1c1c;
+  --text:#fff;
+  --muted:#666;
+  --dim:#333;
+  --green:#00c076;
+  --red:#ff3b57;
+  --accent:#f7931a;
+  --chart-green:#00c076;
+  --chart-red:#ff3b57;
+}
+
+html,body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Space Grotesk',sans-serif;
+  width:100vw;height:100vh;
+  overflow:hidden;
+}
+
+/* ════════════════════════════════
+   NAV BAR — logo left | links right
+════════════════════════════════ */
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:56px;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+}
+
+.nav-logo{
+  padding:0 28px;
+  border-right:1px solid var(--border);
+  height:100%;
+  display:flex;align-items:center;
+  flex-shrink:0;
+}
+.logo-text{
+  font-family:'Space Mono',monospace;
+  font-size:13px;font-weight:700;
+  color:var(--accent);letter-spacing:-.5px;
+  text-decoration:none;
+}
+.logo-text:hover{opacity:.8;}
+.logo-text b{color:var(--accent);font-weight:700;}
+
+/* right nav */
+.nav-end{
+  padding:0 32px;
+  height:100%;
+  display:flex;align-items:center;gap:24px;
+  border-left:1px solid var(--border);
+  flex-shrink:0;
+}
+.nav-blog{
+  font-family:'Space Mono',monospace;
+  font-size:18px;font-weight:700;
+  letter-spacing:1px;
+  color:var(--text);
+  text-transform:uppercase;
+  background:none;border:none;
+  cursor:pointer;transition:color .12s;
+  text-decoration:none;
+  display:flex;align-items:center;
+}
+.nav-blog:hover{color:var(--accent);}
+.nav-menu{
+  font-family:'Space Mono',monospace;
+  font-size:18px;font-weight:700;
+  letter-spacing:1px;
+  color:var(--text);
+  text-transform:uppercase;
+  background:none;border:none;
+  cursor:pointer;transition:color .12s;
+}
+.nav-menu:hover{color:var(--accent);}
+
+/* ════════════════════════════════
+   CENTER TICKERS — inside left panel
+════════════════════════════════ */
+.center-tickers{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  margin-top:12px;
+}
+.nt{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 28px;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  transition:background .12s;
+}
+.nt:last-child{border-bottom:none;}
+.nt:hover{background:rgba(255,255,255,.03);}
+.nt.active{background:rgba(247,147,26,.06);}
+.nt-left{display:flex;align-items:center;gap:10px;}
+.nt-sym{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--text);min-width:32px;}
+.nt-price{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--text);}
+.nt-chg{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;}
+.up{color:var(--green);}
+.dn{color:var(--red);}
+
+/* ════════════════════════════════
+   PAGE — two columns
+   Left ~40% | Right fills
+════════════════════════════════ */
+.page{
+  display:flex;
+  height:calc(100vh - 56px);
+  overflow:hidden;
+}
+
+/* ── LEFT PANEL ── */
+.left{
+  width:40%;max-width:460px;min-width:320px;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  position:relative;
+  background:var(--bg);
+}
+
+/* RANK #1 */
+.rank{
+  padding:22px 28px 0;
+  font-family:'Space Mono',monospace;
+  font-size:9px;letter-spacing:2px;
+  color:var(--muted);text-transform:uppercase;
+}
+
+/* Giant BITCOIN text stack
+   Ref shows: "BITCOIN" huge + coin icon + "BTC" ghost beside it */
+.coin-giant-wrap{
+  padding:4px 28px 0;
+  display:flex;
+  flex-direction:column;
+}
+.coin-name-huge{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(72px,9.5vw,108px);
+  line-height:.9;
+  letter-spacing:0px;
+  color:var(--text);
+  text-transform:uppercase;
+  display:block;
+}
+/* Icon + BTC row — icon is inline with BTC ghost */
+.coin-row{
+  display:flex;align-items:center;
+  gap:12px;margin-top:2px;
+}
+.coin-circle{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:700;color:#fff;
+  font-family:'Space Mono',monospace;
+  flex-shrink:0;
+}
+.coin-ticker-ghost{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(54px,7vw,80px);
+  line-height:1;
+  color:var(--dim);
+  letter-spacing:0px;
+}
+
+/* link pills */
+.pills{
+  display:flex;flex-wrap:wrap;gap:7px;
+  padding:16px 28px;
+  margin-top:auto;
+  border-top:1px solid var(--border);
+}
+.pill{
+  display:flex;align-items:center;gap:5px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:5px 13px;
+  font-size:11px;color:var(--muted);
+  cursor:pointer;transition:all .12s;
+  background:rgba(255,255,255,.02);
+  white-space:nowrap;
+  text-decoration:none;
+}
+.pill:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ── RIGHT PANEL ── */
+.right{
+  flex:1;display:flex;flex-direction:column;
+  overflow:hidden;background:var(--bg);
+}
+
+/* ── PRICE STATS ROW ──
+   Ref: BITCOIN PRICE | MARKET CAP | VOLUME 24H | CIRCULATING SUPPLY | DOMINANCE
+   Horizontal strip with vertical dividers, no background */
+.stats-row{
+  display:grid;
+  grid-template-columns:auto 1fr 1fr 1fr 1fr;
+  flex-shrink:0;
+}
+.sr-cell{
+  padding:14px 22px;
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.sr-cell:last-child{border-right:none;}
+.sr-cell.main-price{padding:14px 28px;}
+
+.sr-label{
+  font-family:'Space Mono',monospace;
+  font-size:8px;letter-spacing:1.5px;
+  color:var(--muted);text-transform:uppercase;
+  margin-bottom:4px;
+}
+/* BIG price number */
+.sr-big{
+  font-family:'Space Mono',monospace;
+  font-size:clamp(22px,2.6vw,34px);
+  font-weight:700;color:var(--text);
+  letter-spacing:-1px;line-height:1;
+  margin-bottom:3px;
+  white-space:nowrap;
+}
+.sr-chg{font-family:'Space Mono',monospace;font-size:11px;}
+.sr-val{
+  font-family:'Space Mono',monospace;
+  font-size:13px;font-weight:700;color:var(--text);
+  margin-bottom:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.sr-sub{font-size:11px;color:var(--muted);}
+
+/* ── CHART AREA ──
+   Chart fills all remaining space.
+   Controls [BTC/USDT][4H][icon] sit at BOTTOM-LEFT of chart (absolutely positioned)
+   matching the ref exactly */
+.chart-container{
+  flex:1;position:relative;overflow:hidden;
+  min-height:0;
+}
+canvas#mainChart{
+  display:block;
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  width:100%;height:100%;
+}
+
+/* ── CHART CONTROLS ROW — above chart ── */
+.chart-controls{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:10px 16px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+  background:var(--bg);
+}
+.cc-pair{
+  font-family:'Space Mono',monospace;font-size:11px;font-weight:700;
+  color:var(--text);
+  background:rgba(255,255,255,.07);
+  border:1px solid var(--border);border-radius:4px;
+  padding:4px 10px;
+}
+.cc-tf{
+  font-family:'Space Mono',monospace;font-size:10px;font-weight:700;
+  padding:4px 10px;border-radius:4px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--muted);cursor:pointer;transition:all .12s;
+}
+.cc-tf:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
+.cc-tf.active{background:rgba(255,255,255,.07);border-color:var(--accent);color:var(--accent);}
+.cc-icon{
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:4px;
+  color:var(--muted);font-size:12px;cursor:pointer;transition:all .12s;
+}
+.cc-icon:hover{border-color:var(--accent);color:var(--accent);}
+
+/* live badge */
+.live-badge{
+  display:flex;align-items:center;gap:5px;
+  font-family:'Space Mono',monospace;font-size:9px;
+  color:var(--green);letter-spacing:1px;
+}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:lp 1.4s ease-in-out infinite;}
+@keyframes lp{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.7);}}
+
+/* Tooltip — matches ref card exactly */
+.tooltip{
+  position:absolute;
+  background:rgba(8,8,8,.96);
+  border:1px solid var(--border);
+  border-radius:6px;padding:14px 18px;
+  pointer-events:none;display:none;z-index:20;
+  min-width:180px;
+}
+.tt-top{
+  display:flex;justify-content:space-between;
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--muted);margin-bottom:10px;
+}
+.tt-lbl{font-size:10px;color:var(--muted);letter-spacing:.5px;margin-bottom:2px;text-transform:uppercase;}
+.tt-val{font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--text);}
+
+/* spinner */
+.spinner-wrap{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:30;}
+.spin{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp .7s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg);}}
+
+/* ════════════════════════════════
+   CONTACT DRAWER
+════════════════════════════════ */
+#drawer{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.15);z-index:200;
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  justify-content:flex-end;
+}
+#drawer.open{display:flex;}
+.drawer-inner{
+  width:460px;background:#080808;
+  border-left:1px solid var(--border);
+  height:100%;overflow-y:auto;
+  padding:36px 30px;
+  display:flex;flex-direction:column;gap:20px;
+  animation:sd .22s ease;
+}
+@keyframes sd{from{transform:translateX(100%);}to{transform:translateX(0);}}
+.dh{display:flex;align-items:center;justify-content:space-between;}
+.dh-title{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;}
+.dh-close{
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  color:var(--muted);width:30px;height:30px;border-radius:5px;
+  cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .12s;
+}
+.dh-close:hover{color:var(--text);border-color:var(--accent);}
+.dc{
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  border-radius:8px;padding:16px;display:flex;align-items:center;gap:14px;
+  cursor:pointer;transition:border-color .12s;
+}
+.dc:hover{border-color:var(--accent);}
+.dc-ico{width:38px;height:38px;background:rgba(247,147,26,.1);border:1px solid rgba(247,147,26,.2);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.dc-lbl{font-family:'Space Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+.dc-val{font-size:13px;font-weight:600;color:var(--text);}
+.d-sep{border:none;border-top:1px solid var(--border);}
+.d-flbl{font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.d-inp{
+  background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;
+  padding:9px 12px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;
+  outline:none;width:100%;transition:border-color .12s;margin-bottom:8px;
+}
+.d-inp:focus{border-color:var(--accent);}
+textarea.d-inp{resize:none;height:88px;}
+.d-send{
+  background:var(--accent);border:none;border-radius:5px;padding:11px;width:100%;
+  color:#000;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:opacity .12s;
+}
+.d-send:hover{opacity:.85;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-logo">
+    <span class="logo-text">aungmyatphyo<b>.com</b></span>
+  </div>
+  <div class="nav-end">
+    <a class="nav-blog" href="aung-myat-phyo-blog.html">BLOG</a>
+    <button class="nav-menu" onclick="openDrawer()">CONTACT</button>
+  </div>
+</div>
+
+<!-- CONTACT DRAWER -->
+<div id="drawer" onclick="if(event.target===this)closeDrawer()">
+  <div class="drawer-inner">
+    <div class="dh">
+      <div class="dh-title">CONTACT</div>
+      <button class="dh-close" onclick="closeDrawer()">✕</button>
+    </div>
+    <p style="font-size:12px;color:var(--muted);line-height:1.65;">Get in touch for consulting, market analysis, or collaboration.</p>
+    <div class="dc"><div class="dc-ico">✉️</div><div><div class="dc-lbl">Email</div><div class="dc-val">aungmyatphyo@crypto.io</div></div></div>
+    <div class="dc"><div class="dc-ico">𝕏</div><div><div class="dc-lbl">Twitter / X</div><div class="dc-val">@AungMyatPhyo</div></div></div>
+    <div class="dc"><div class="dc-ico" style="font-size:13px;font-weight:900;">in</div><div><div class="dc-lbl">LinkedIn</div><div class="dc-val">Aung Myat Phyo</div></div></div>
+    <div class="dc"><div class="dc-ico">⚡</div><div><div class="dc-lbl">Telegram</div><div class="dc-val">@AungCrypto</div></div></div>
+    <hr class="d-sep">
+    <div>
+      <div class="d-flbl">Send a Message</div>
+      <input class="d-inp" placeholder="Your Name">
+      <input class="d-inp" placeholder="Your Email">
+      <textarea class="d-inp" placeholder="Your message..."></textarea>
+      <button class="d-send" onclick="this.textContent='Sent ✓';this.style.background='#00c076';setTimeout(()=>{this.textContent='Send Message';this.style.background='var(--accent)';},2400)">Send Message</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- LEFT -->
+  <div class="left">
+    <div class="rank">Rank #<span id="coinRank">1</span></div>
+
+    <div class="coin-giant-wrap">
+      <span class="coin-name-huge" id="coinName">BITCOIN</span>
+      <div class="coin-row">
+        <div class="coin-circle" id="coinIcon">₿</div>
+        <span class="coin-ticker-ghost" id="coinTicker">BTC</span>
+      </div>
+    </div>
+
+    <!-- Tickers centered in left panel -->
+    <div id="navTickers" class="center-tickers"></div>
+
+    <div class="pills" id="pillsRow">
+      <a class="pill" href="https://bitcoin.org" target="_blank" rel="noopener noreferrer">🔗 bitcoin.org</a>
+      <a class="pill" href="https://www.blockchain.com/explorer" target="_blank" rel="noopener noreferrer">🔍 Explorers</a>
+      <a class="pill" href="https://bitcointalk.org" target="_blank" rel="noopener noreferrer">👥 Community</a>
+      <a class="pill" href="https://bitcoin.org/bitcoin.pdf" target="_blank" rel="noopener noreferrer">📄 Whitepaper</a>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+
+    <!-- STATS ROW -->
+    <div class="stats-row">
+      <div class="sr-cell main-price">
+        <div class="sr-label" id="priceLabel">Bitcoin Price (BTC)</div>
+        <div class="sr-big" id="priceMain">—</div>
+        <div class="sr-chg" id="priceChg">—</div>
+      </div>
+      <div class="sr-cell">
+        <div class="sr-label">Market Cap</div>
+        <div class="sr-val" id="mcapVal">—</div>
+        <div class="sr-sub" id="mcapSub">—</div>
+      </div>
+      <div class="sr-cell">
+        <div class="sr-label">Volume 24H</div>
+        <div class="sr-val" id="volVal">—</div>
+        <div class="sr-sub" id="volSub">—</div>
+      </div>
+      <div class="sr-cell">
+        <div class="sr-label">Circulating Supply</div>
+        <div class="sr-val" id="supplyVal">—</div>
+        <div class="sr-sub" id="supplySub">—</div>
+      </div>
+      <div class="sr-cell">
+        <div class="sr-label">Dominance</div>
+        <div class="sr-val" id="domVal">—</div>
+        <div class="sr-sub" id="domSub">—</div>
+      </div>
+    </div>
+
+    <!-- CHART CONTAINER -->
+    <!-- Controls row ABOVE chart -->
+    <div class="chart-controls">
+      <span class="cc-pair" id="ctrlPair">BTC/USDT</span>
+      <button class="cc-tf" data-tf="15m">15m</button>
+      <button class="cc-tf active" data-tf="1h">1H</button>
+      <button class="cc-tf" data-tf="4h">4H</button>
+      <button class="cc-tf" data-tf="1d">1D</button>
+      <button class="cc-tf" data-tf="1w">1W</button>
+      <div class="cc-icon">📊</div>
+      <div class="live-badge" style="position:static;margin-left:auto;"><span class="ldot"></span>LIVE</div>
+    </div>
+
+    <div class="chart-container" id="chartWrap">
+      <canvas id="mainChart"></canvas>
+
+      <!-- Tooltip -->
+      <div class="tooltip" id="tooltip">
+        <div class="tt-top">
+          <span id="ttDate">—</span>
+          <span id="ttTime">—</span>
+        </div>
+        <div class="tt-lbl">Price</div>
+        <div class="tt-val" id="ttVal">—</div>
+      </div>
+
+      <div class="spinner-wrap" id="spinner"><div class="spin"></div></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const COINS={
+  BTC:{symbol:'BTCUSDT',name:'BITCOIN', ticker:'BTC',icon:'₿',rank:1,color:'#f7931a'},
+  ETH:{symbol:'ETHUSDT',name:'ETHEREUM',ticker:'ETH',icon:'Ξ',rank:2,color:'#627eea'},
+  BNB:{symbol:'BNBUSDT',name:'BNB',     ticker:'BNB',icon:'B',rank:4,color:'#f0b90b'},
+  SOL:{symbol:'SOLUSDT',name:'SOLANA',  ticker:'SOL',icon:'◎',rank:5,color:'#9945ff'},
+  XRP:{symbol:'XRPUSDT',name:'XRP',     ticker:'XRP',icon:'✕',rank:6,color:'#00aae4'},
+};
+const TF_LIMIT={'15m':96,'1h':120,'4h':120,'1d':180,'1w':104};
+
+let activeCoin='BTC',activeTF='1h',candles=[],tickerData={};
+let priceWS=null,tickerWS=null,hovered=null;
+
+// ── CANVAS ──────────────────────────────────────────────────────────
+const canvas=document.getElementById('mainChart');
+const ctx=canvas.getContext('2d');
+
+function resize(){
+  const wrap=document.getElementById('chartWrap')||canvas.parentElement;
+  const dpr=devicePixelRatio;
+  const W=wrap.clientWidth, H=wrap.clientHeight;
+  canvas.width=W*dpr;
+  canvas.height=H*dpr;
+  canvas.style.width=W+'px';
+  canvas.style.height=H+'px';
+  draw();
+}
+
+function draw(){
+  if(!candles.length)return;
+  const W=canvas.width,H=canvas.height,dpr=devicePixelRatio;
+  ctx.clearRect(0,0,W,H);
+
+  /* Split chart area:
+     Top ~70% = area/line chart (matches ref)
+     Bottom ~30% = volume bars */
+  const CHART_H=H*0.68;
+  const VOL_H  =H*0.28;
+  const GAP_H  =H*0.04;
+  const PAD={t:0,r:0,b:0,l:0};
+  const cW=W-PAD.l-PAD.r;
+
+  /* Price range */
+  const closes=candles.map(c=>c.close);
+  const highs =candles.map(c=>c.high);
+  const lows  =candles.map(c=>c.low);
+  const maxP=Math.max(...highs),minP=Math.min(...lows);
+  const rang=(maxP-minP)||1;
+  const pMax=maxP+rang*.06,pMin=minP-rang*.06;
+
+  const xOf=i=>PAD.l+(i/(candles.length-1))*cW;
+  const yOf=p=>PAD.t+CHART_H-((p-pMin)/(pMax-pMin))*CHART_H;
+
+  /* No grid lines — matches reference */
+
+  /* ── AREA CHART (line + gradient fill) ── */
+  const firstClose=candles[0].close,lastClose=candles.at(-1).close;
+  const isPositive=lastClose>=firstClose;
+  const lineCol=isPositive?'#00c076':'#ff3b57';
+  const gradTop=isPositive?'rgba(0,192,118,.35)':'rgba(255,59,87,.35)';
+  const gradBot=isPositive?'rgba(0,192,118,.0)':'rgba(255,59,87,.0)';
+
+  // gradient fill
+  const grad=ctx.createLinearGradient(0,PAD.t,0,PAD.t+CHART_H);
+  grad.addColorStop(0,gradTop);
+  grad.addColorStop(1,gradBot);
+
+  ctx.beginPath();
+  ctx.moveTo(xOf(0),yOf(candles[0].close));
+  candles.forEach((c,i)=>{ if(i>0) ctx.lineTo(xOf(i),yOf(c.close)); });
+  ctx.lineTo(xOf(candles.length-1),PAD.t+CHART_H);
+  ctx.lineTo(PAD.l,PAD.t+CHART_H);
+  ctx.closePath();
+  ctx.fillStyle=grad;
+  ctx.fill();
+
+  // line on top
+  ctx.beginPath();
+  ctx.moveTo(xOf(0),yOf(candles[0].close));
+  candles.forEach((c,i)=>{ if(i>0) ctx.lineTo(xOf(i),yOf(c.close)); });
+  ctx.strokeStyle=lineCol;ctx.lineWidth=1.5*dpr;ctx.lineJoin='round';
+  ctx.stroke();
+
+  // hover dot
+  if(hovered!==null){
+    const hx=xOf(hovered),hy=yOf(candles[hovered].close);
+    ctx.beginPath();ctx.arc(hx,hy,5*dpr,0,Math.PI*2);
+    ctx.fillStyle=lineCol;ctx.fill();
+    ctx.beginPath();ctx.arc(hx,hy,3*dpr,0,Math.PI*2);
+    ctx.fillStyle='#fff';ctx.fill();
+  }
+
+  /* ── VOLUME BARS ── */
+  const volTop=PAD.t+CHART_H+GAP_H;
+  const maxVol=Math.max(...candles.map(c=>c.vol));
+  const bw=Math.max(2*dpr,Math.min(18*dpr,(cW/candles.length)*.7));
+
+  candles.forEach((c,i)=>{
+    const x=xOf(i);
+    const bh=(c.vol/maxVol)*VOL_H;
+    const isUp=c.close>=c.open;
+    ctx.fillStyle=isUp?'rgba(0,192,118,.75)':'rgba(255,59,87,.75)';
+    ctx.fillRect(x-bw/2,volTop+VOL_H-bh,bw,bh);
+  });
+
+  /* No time labels — clean chart like reference */
+}
+
+// ── HOVER ──────────────────────────────────────────────────────────
+canvas.addEventListener('mousemove',e=>{
+  if(!candles.length)return;
+  const r=canvas.getBoundingClientRect(),dpr=devicePixelRatio;
+  const mx=(e.clientX-r.left)*dpr;
+  const PAD_L=0,PAD_R=0;
+  const cW=canvas.width-PAD_L-PAD_R;
+  const idx=Math.round(((mx-PAD_L)/cW)*(candles.length-1));
+  const ci=Math.max(0,Math.min(candles.length-1,idx));
+  if(hovered!==ci){
+    hovered=ci;draw();
+    const c=candles[ci],d=new Date(c.time);
+    document.getElementById('ttDate').textContent=d.toLocaleDateString();
+    document.getElementById('ttTime').textContent=d.toLocaleTimeString();
+    document.getElementById('ttVal').textContent='$'+fmtP(c.close);
+    const tt=document.getElementById('tooltip');
+    tt.style.display='block';
+    let tx=e.clientX-r.left+14;
+    if(tx+190>r.width)tx=e.clientX-r.left-205;
+    tt.style.left=tx+'px';
+    tt.style.top=Math.max(10,(e.clientY-r.top-55))+'px';
+  }
+});
+canvas.addEventListener('mouseleave',()=>{
+  hovered=null;draw();
+  document.getElementById('tooltip').style.display='none';
+});
+
+// ── DATA ───────────────────────────────────────────────────────────
+async function fetchKlines(sym,iv){
+  const r=await fetch(`https://api.binance.com/api/v3/klines?symbol=${sym}&interval=${iv}&limit=${TF_LIMIT[iv]||120}`);
+  const d=await r.json();
+  return d.map(k=>({time:+k[0],open:+k[1],high:+k[2],low:+k[3],close:+k[4],vol:+k[5]}));
+}
+async function fetchTicker(sym){
+  return (await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${sym}`)).json();
+}
+
+async function loadCoin(key){
+  const coin=COINS[key];
+  document.getElementById('spinner').style.display='flex';
+  try{candles=await fetchKlines(coin.symbol,activeTF);}catch(e){candles=[];}
+  let tk={};try{tk=await fetchTicker(coin.symbol);}catch(e){}
+  document.getElementById('spinner').style.display='none';
+
+  const price=parseFloat(tk.lastPrice)||(candles.length?candles.at(-1).close:0);
+  const pct  =parseFloat(tk.priceChangePercent)||0;
+  const vol  =parseFloat(tk.quoteVolume)||0;
+  const cs   =supply(key);
+  const mcap =price*cs;
+  const dom  =dominance(key);
+  const isUp =pct>=0;
+
+  // left panel
+  document.getElementById('coinRank').textContent=coin.rank;
+  document.getElementById('coinName').textContent=coin.name;
+  document.getElementById('coinTicker').textContent=coin.ticker;
+  const ico=document.getElementById('coinIcon');
+  ico.textContent=coin.icon;ico.style.background=coin.color;
+
+  // pills
+  const pm={
+    BTC:[
+      {label:'🔗 bitcoin.org', url:'https://bitcoin.org'},
+      {label:'🔍 Explorers',   url:'https://www.blockchain.com/explorer'},
+      {label:'👥 Community',   url:'https://bitcointalk.org'},
+      {label:'📄 Whitepaper',  url:'https://bitcoin.org/bitcoin.pdf'},
+    ],
+    ETH:[
+      {label:'🔗 ethereum.org', url:'https://ethereum.org'},
+      {label:'🔍 Explorers',    url:'https://etherscan.io'},
+      {label:'👥 Community',    url:'https://ethereum.org/en/community'},
+      {label:'📄 Whitepaper',   url:'https://ethereum.org/en/whitepaper'},
+    ],
+    BNB:[
+      {label:'🔗 bnbchain.org', url:'https://www.bnbchain.org'},
+      {label:'🔍 BscScan',      url:'https://bscscan.com'},
+      {label:'👥 Community',    url:'https://t.me/BNBchaincommunity'},
+      {label:'📄 Whitepaper',   url:'https://github.com/bnb-chain/whitepaper'},
+    ],
+    SOL:[
+      {label:'🔗 solana.com',  url:'https://solana.com'},
+      {label:'🔍 Solscan',     url:'https://solscan.io'},
+      {label:'👥 Community',   url:'https://solana.com/community'},
+      {label:'📄 Whitepaper',  url:'https://solana.com/solana-whitepaper.pdf'},
+    ],
+    XRP:[
+      {label:'🔗 xrpl.org',   url:'https://xrpl.org'},
+      {label:'🔍 XRPScan',    url:'https://xrpscan.com'},
+      {label:'👥 Community',  url:'https://xrpcommunity.blog'},
+      {label:'📄 Whitepaper', url:'https://ripple.com/files/ripple_consensus_whitepaper.pdf'},
+    ],
+  };
+  document.getElementById('pillsRow').innerHTML=(pm[key]||pm.BTC).map(p=>
+    `<a class="pill" href="${p.url}" target="_blank" rel="noopener noreferrer">${p.label}</a>`
+  ).join('');
+  document.getElementById('ctrlPair').textContent=key+'/USDT';
+
+  // right stats row
+  document.getElementById('priceLabel').textContent=coin.name+' Price ('+key+')';
+  document.getElementById('priceMain').textContent='$'+fmtP(price);
+  const pc=document.getElementById('priceChg');
+  pc.textContent=(isUp?'+':'')+pct.toFixed(2)+'%';pc.className='sr-chg '+(isUp?'up':'dn');
+
+  document.getElementById('mcapVal').textContent='$'+fmtL(mcap);
+  document.getElementById('mcapSub').textContent=(isUp?'↑':'↓')+Math.abs(pct).toFixed(2)+'%';
+  document.getElementById('mcapSub').className='sr-sub '+(isUp?'up':'dn');
+  document.getElementById('volVal').textContent='$'+fmtL(vol);
+  document.getElementById('volSub').textContent='Last 24 hours';
+  document.getElementById('supplyVal').textContent=fmtL(cs)+' '+key;
+  document.getElementById('supplySub').textContent=supplyPct(key);
+  document.getElementById('domVal').textContent=dom+'%';
+  document.getElementById('domSub').textContent=key+' market share';
+
+  resize();
+  setupPriceWS(coin.symbol.toLowerCase());
+}
+
+function setupPriceWS(s){
+  if(priceWS){priceWS.close();priceWS=null;}
+  try{
+    priceWS=new WebSocket(`wss://stream.binance.com:9443/ws/${s}@aggTrade`);
+    priceWS.onmessage=e=>{
+      const d=JSON.parse(e.data),p=parseFloat(d.p);if(!p)return;
+      document.getElementById('priceMain').textContent='$'+fmtP(p);
+      if(candles.length){candles.at(-1).close=p;if(p>candles.at(-1).high)candles.at(-1).high=p;if(p<candles.at(-1).low)candles.at(-1).low=p;draw();}
+    };
+  }catch(e){}
+}
+
+function setupTickerWS(){
+  if(tickerWS)tickerWS.close();
+  const streams=Object.values(COINS).map(c=>c.symbol.toLowerCase()+'@miniTicker').join('/');
+  try{
+    tickerWS=new WebSocket(`wss://stream.binance.com:9443/stream?streams=${streams}`);
+    tickerWS.onmessage=e=>{
+      const m=JSON.parse(e.data);if(!m.data)return;
+      const d=m.data,coin=Object.values(COINS).find(c=>c.symbol===d.s);if(!coin)return;
+      tickerData[coin.ticker]={price:parseFloat(d.c),pct:((parseFloat(d.c)-parseFloat(d.o))/parseFloat(d.o)*100).toFixed(2)};
+      renderTickers();
+    };
+  }catch(e){}
+}
+
+function renderTickers(){
+  const bar=document.getElementById('navTickers');
+  bar.innerHTML='';
+  Object.keys(COINS).forEach(k=>{
+    const c=COINS[k],td=tickerData[k];
+    const pct=td?td.pct:'0.00',isUp=parseFloat(pct)>=0;
+    const el=document.createElement('div');
+    el.className='nt'+(k===activeCoin?' active':'');
+    el.innerHTML=`
+      <div class="nt-left">
+        <span class="nt-sym">${k}</span>
+        <span class="nt-price">${td?'$'+fmtP(td.price):'—'}</span>
+      </div>
+      <span class="nt-chg ${isUp?'up':'dn'}">${isUp?'+':''}${pct}%</span>
+    `;
+    el.onclick=()=>{activeCoin=k;loadCoin(k);renderTickers();};
+    bar.appendChild(el);
+  });
+}
+
+function fmtP(p){if(p>=1000)return p.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});if(p>=1)return p.toFixed(4);return p.toFixed(6);}
+function fmtL(n){if(n>=1e12)return(n/1e12).toFixed(2)+'T';if(n>=1e9)return(n/1e9).toFixed(2)+'B';if(n>=1e6)return(n/1e6).toFixed(2)+'M';return n.toFixed(0);}
+function supply(k){return{BTC:19876743,ETH:120280000,BNB:145887575,SOL:466000000,XRP:57800000000}[k]||0;}
+function dominance(k){return{BTC:'43.5',ETH:'17.2',BNB:'3.1',SOL:'4.8',XRP:'3.4'}[k]||'—';}
+function supplyPct(k){return{BTC:'90% of max supply',ETH:'Unlimited',BNB:'72% of max',SOL:'~65%',XRP:'~52%'}[k]||'—';}
+
+document.querySelectorAll('.cc-tf').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.cc-tf').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');activeTF=btn.dataset.tf;loadCoin(activeCoin);
+  });
+});
+
+function openDrawer(){document.getElementById('drawer').classList.add('open');}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');}
+
+window.addEventListener('resize',resize);
+renderTickers();
+setupTickerWS();
+loadCoin('BTC');
+Object.values(COINS).forEach(async coin=>{
+  try{
+    const td=await fetchTicker(coin.symbol);
+    const p=parseFloat(td.lastPrice),o=parseFloat(td.openPrice);
+    tickerData[coin.ticker]={price:p,pct:((p-o)/o*100).toFixed(2)};
+    renderTickers();
+  }catch(e){}
+});
+</script>
+</body>
+</html>
