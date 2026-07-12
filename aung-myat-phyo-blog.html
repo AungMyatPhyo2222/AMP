@@ -244,43 +244,6 @@
     letter-spacing: 0.5px;
   }
 
-  /* ── TICKER STRIP ── */
-  .ticker-strip {
-    border-bottom: 1px solid var(--border);
-    overflow: hidden;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    background: var(--surface);
-  }
-
-  .ticker-inner {
-    display: flex;
-    gap: 48px;
-    animation: ticker 28s linear infinite;
-    white-space: nowrap;
-    padding: 0 24px;
-  }
-
-  @keyframes ticker {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  .ticker-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.5px;
-  }
-
-  .t-sym { color: var(--text-dim); }
-  .t-price { color: var(--text); font-weight: 700; }
-  .t-up { color: var(--green); }
-  .t-down { color: var(--red); }
-
   /* ── GRID SECTION ── */
   .section {
     padding: 64px 40px;
@@ -976,20 +939,7 @@
 </nav>
 
 <!-- TICKER STRIP -->
-<div class="ticker-strip">
-  <div class="ticker-inner">
-    <span class="ticker-item"><span class="t-sym">BTC</span><span class="t-price" id="btc1">$—</span><span class="t-down" id="btcd1">—%</span></span>
-    <span class="ticker-item"><span class="t-sym">ETH</span><span class="t-price" id="eth1">$—</span><span class="t-down" id="ethd1">—%</span></span>
-    <span class="ticker-item"><span class="t-sym">BNB</span><span class="t-price" id="bnb1">$—</span><span class="t-down" id="bnbd1">—%</span></span>
-    <span class="ticker-item"><span class="t-sym">SOL</span><span class="t-price" id="sol1">$—</span><span class="t-down" id="sold1">—%</span></span>
-    <span class="ticker-item"><span class="t-sym">XRP</span><span class="t-price" id="xrp1">$—</span><span class="t-down" id="xrpd1">—%</span></span>
-    <span class="ticker-item"><span class="t-sym">BTC</span><span class="t-price" id="btc2">$—</span><span class="t-down" id="btcd2">—%</span></span>
-    <span class="ticker-item"><span class="t-sym">ETH</span><span class="t-price" id="eth2">$—</span><span class="t-down" id="ethd2">—%</span></span>
-    <span class="ticker-item"><span class="t-sym">BNB</span><span class="t-price" id="bnb2">$—</span><span class="t-down" id="bnbd2">—%</span></span>
-    <span class="ticker-item"><span class="t-sym">SOL</span><span class="t-price" id="sol2">$—</span><span class="t-down" id="sold2">—%</span></span>
-    <span class="ticker-item"><span class="t-sym">XRP</span><span class="t-price" id="xrp2">$—</span><span class="t-down" id="xrpd2">—%</span></span>
-  </div>
-</div>
+
 
 <!-- HERO -->
 <section class="hero">
@@ -1119,57 +1069,7 @@
 </section>
 
 <script>
-const BLOG_COINS=[
-  {sym:'BTC',api:'BTCUSDT',p1:'btc1',c1:'btcd1',p2:'btc2',c2:'btcd2'},
-  {sym:'ETH',api:'ETHUSDT',p1:'eth1',c1:'ethd1',p2:'eth2',c2:'ethd2'},
-  {sym:'BNB',api:'BNBUSDT',p1:'bnb1',c1:'bnbd1',p2:'bnb2',c2:'bnbd2'},
-  {sym:'SOL',api:'SOLUSDT',p1:'sol1',c1:'sold1',p2:'sol2',c2:'sold2'},
-  {sym:'XRP',api:'XRPUSDT',p1:'xrp1',c1:'xrpd1',p2:'xrp2',c2:'xrpd2'},
-];
-
-function fmtBlog(p){
-  if(p>=1000)return'$'+p.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-  if(p>=1)return'$'+p.toFixed(4);
-  return'$'+p.toFixed(5);
-}
-
-function updateCoin(coin,price,pct){
-  var isUp=pct>=0,cls=isUp?'t-up':'t-down',str=(isUp?'+':'')+pct.toFixed(2)+'%';
-  [coin.p1,coin.p2].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=fmtBlog(price);});
-  [coin.c1,coin.c2].forEach(function(id){var el=document.getElementById(id);if(el){el.textContent=str;el.className=cls;}});
-}
-
-async function loadBlogTickers(){
-  try{
-    var syms=encodeURIComponent(JSON.stringify(BLOG_COINS.map(function(c){return c.api;})));
-    var res=await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols='+syms);
-    var data=await res.json();
-    data.forEach(function(t){
-      var coin=BLOG_COINS.find(function(c){return c.api===t.symbol;});
-      if(!coin)return;
-      updateCoin(coin,parseFloat(t.lastPrice),parseFloat(t.priceChangePercent));
-    });
-  }catch(e){console.warn('Ticker error:',e);}
-}
-
-// WebSocket real-time
-(function setupWS(){
-  try{
-    var streams=BLOG_COINS.map(function(c){return c.api.toLowerCase()+'@miniTicker';}).join('/');
-    var ws=new WebSocket('wss://stream.binance.com:9443/stream?streams='+streams);
-    ws.onmessage=function(e){
-      var msg=JSON.parse(e.data);
-      if(!msg.data)return;
-      var d=msg.data,coin=BLOG_COINS.find(function(c){return c.api===d.s;});
-      if(!coin)return;
-      var price=parseFloat(d.c),open=parseFloat(d.o);
-      updateCoin(coin,price,(price-open)/open*100);
-    };
-  }catch(e){}
-})();
-
-loadBlogTickers();
-setInterval(loadBlogTickers,15000);
+// No ticker on blog page
 </script>
 </body>
 </html>
