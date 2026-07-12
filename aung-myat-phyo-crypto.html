@@ -394,23 +394,25 @@ textarea.d-inp{resize:none;height:88px;}
   /* NAV */
   .nav {
     height: auto;
-    flex-wrap: wrap;
-    padding: 10px 0;
+    flex-wrap: nowrap;
+    padding: 12px 16px;
+    justify-content: space-between;
   }
   .nav-logo {
     border-right: none;
-    padding: 8px 16px;
+    padding: 0;
     height: auto;
   }
-  .logo-text { font-size: 13px; }
+  .logo-text { font-size: 12px; }
   .nav-end {
     border-left: none;
-    padding: 8px 16px;
-    gap: 14px;
+    padding: 0;
+    gap: 16px;
     height: auto;
     margin-left: auto;
   }
-  .nav-blog, .nav-menu { font-size: 13px; }
+  .nav-blog { font-size: 13px; display: flex; }
+  .nav-menu { font-size: 13px; }
 
   /* PAGE — stack vertically */
   .page {
@@ -521,9 +523,9 @@ textarea.d-inp{resize:none;height:88px;}
 @media (max-width: 480px) {
   .coin-name-huge { font-size: clamp(44px, 16vw, 64px); }
   .coin-ticker-ghost { font-size: clamp(32px, 12vw, 48px); }
-  .stats-row { grid-template-columns: 1fr 1fr; }
-  .sr-cell.main-price { grid-column: span 2; }
-  .nav-blog { display: none; }
+  .categories-grid { grid-template-columns: 1fr; }
+  .cat-card { border-right: none; }
+  .author-stats { grid-template-columns: 1fr 1fr; }
   .chart-container { height: 260px; min-height: 260px; }
 }
 
