@@ -380,14 +380,179 @@ textarea.d-inp{resize:none;height:88px;}
   letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:opacity .12s;
 }
 .d-send:hover{opacity:.85;}
+
+/* ═══════════════════════════════════
+   MOBILE RESPONSIVE
+═══════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Allow page to scroll vertically */
+  html, body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+
+  /* NAV — single row, no wrap */
+  .nav {
+    height: 52px;
+    padding: 0 16px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    border-right: none;
+    padding: 0;
+    height: auto;
+    flex-shrink: 0;
+  }
+  .logo-text { font-size: 12px; }
+  .nav-end {
+    border-left: none;
+    padding: 0;
+    gap: 14px;
+    height: auto;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .nav-blog, .nav-menu { font-size: 13px; }
+
+  /* PAGE — stack vertically */
+  .page {
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  /* LEFT PANEL — full width on top */
+  .left {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .rank { padding: 16px 16px 0; font-size: 9px; }
+
+  .coin-giant-wrap { padding: 4px 16px 0; }
+  .coin-name-huge {
+    font-size: clamp(56px, 15vw, 80px);
+    letter-spacing: -1px;
+  }
+  .coin-ticker-ghost {
+    font-size: clamp(40px, 11vw, 58px);
+  }
+  .coin-circle { width: 32px; height: 32px; font-size: 16px; }
+
+  /* Center tickers — horizontal scroll */
+  .center-tickers {
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .center-tickers::-webkit-scrollbar { display: none; }
+
+  .nt {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    border-right: 1px solid var(--border) !important;
+    border-bottom: none !important;
+    padding: 10px 16px !important;
+    min-width: 110px !important;
+    flex-shrink: 0 !important;
+    height: auto !important;
+  }
+  .nt:last-child { border-right: none !important; }
+  .nt-left { flex-direction: column; gap: 3px; align-items: flex-start; }
+  .nt-sym { font-size: 9px; margin-bottom: 2px; }
+  .nt-price { font-size: 12px; }
+  .nt-chg { font-size: 10px; margin-top: 1px; }
+
+  /* Pills */
+  .pills {
+    padding: 12px 16px;
+    gap: 6px;
+    margin-top: 0 !important;
+    border-top: 1px solid var(--border);
+  }
+  .pill { font-size: 10px; padding: 4px 10px; }
+
+  /* RIGHT PANEL — full width below */
+  .right {
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    flex: none !important;
+  }
+
+  /* Stats row — price full width, rest 2-col */
+  .stats-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .sr-cell {
+    padding: 12px 14px !important;
+  }
+  .sr-cell.main-price {
+    grid-column: span 2 !important;
+    border-right: none !important;
+    padding: 14px 16px !important;
+  }
+  .sr-big { font-size: clamp(22px, 6vw, 32px) !important; }
+  .sr-label { font-size: 7px; }
+  .sr-val { font-size: 12px; }
+  .sr-sub { font-size: 10px; }
+
+  /* Chart controls */
+  .chart-controls {
+    padding: 8px 10px;
+    gap: 5px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .chart-controls::-webkit-scrollbar { display: none; }
+  .cc-pair { font-size: 9px; padding: 3px 8px; white-space: nowrap; }
+  .cc-tf { font-size: 9px; padding: 3px 7px; }
+  .cc-icon { width: 24px; height: 24px; font-size: 10px; }
+  .live-badge { font-size: 8px; white-space: nowrap; }
+
+  /* Chart — fixed height */
+  .chart-container {
+    height: 300px !important;
+    min-height: 300px !important;
+    flex: none !important;
+  }
+
+  /* Contact drawer — full width */
+  .drawer-inner {
+    width: 100vw !important;
+    padding: 24px 20px !important;
+  }
+
+  /* Tooltip */
+  .tooltip { min-width: 140px; }
+  .tt-val { font-size: 16px; }
+}
+
+@media (max-width: 400px) {
+  .coin-name-huge { font-size: clamp(48px, 16vw, 64px); }
+  .coin-ticker-ghost { font-size: clamp(34px, 12vw, 48px); }
+  .chart-container { height: 240px !important; min-height: 240px !important; }
+  .nav-blog { font-size: 12px; }
+  .nav-menu { font-size: 12px; }
+}
+
 </style>
 </head>
-<!-- EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  // Initialize EmailJS with your public key
-  emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');
-</script>
 <body>
 
 <!-- NAV -->
@@ -408,15 +573,18 @@ textarea.d-inp{resize:none;height:88px;}
       <div class="dh-title">CONTACT</div>
       <button class="dh-close" onclick="closeDrawer()">✕</button>
     </div>
-    <p style="font-size:12px;color:var(--muted);line-height:1.65;">Send a message and I'll get back to you.</p>
+    <p style="font-size:12px;color:var(--muted);line-height:1.65;">Get in touch for consulting, market analysis, or collaboration.</p>
+    <div class="dc"><div class="dc-ico">✉️</div><div><div class="dc-lbl">Email</div><div class="dc-val">aungmyatphyo@crypto.io</div></div></div>
+    <div class="dc"><div class="dc-ico">𝕏</div><div><div class="dc-lbl">Twitter / X</div><div class="dc-val">@AungMyatPhyo</div></div></div>
+    <div class="dc"><div class="dc-ico" style="font-size:13px;font-weight:900;">in</div><div><div class="dc-lbl">LinkedIn</div><div class="dc-val">Aung Myat Phyo</div></div></div>
+    <div class="dc"><div class="dc-ico">⚡</div><div><div class="dc-lbl">Telegram</div><div class="dc-val">@AungCrypto</div></div></div>
     <hr class="d-sep">
     <div>
       <div class="d-flbl">Send a Message</div>
-      <input id="contactName" class="d-inp" placeholder="Your Name">
-      <input id="contactEmail" class="d-inp" placeholder="Your Email">
-      <textarea id="contactMsg" class="d-inp" placeholder="Your message..."></textarea>
-      <button class="d-send" onclick="sendContactEmail(this)">Send Message</button>
-      <div id="contactStatus" style="font-family:'Space Mono',monospace;font-size:11px;text-align:center;margin-top:10px;display:none;"></div>
+      <input class="d-inp" placeholder="Your Name">
+      <input class="d-inp" placeholder="Your Email">
+      <textarea class="d-inp" placeholder="Your message..."></textarea>
+      <button class="d-send" onclick="this.textContent='Sent ✓';this.style.background='#00c076';setTimeout(()=>{this.textContent='Send Message';this.style.background='var(--accent)';},2400)">Send Message</button>
     </div>
   </div>
 </div>
@@ -798,55 +966,6 @@ document.querySelectorAll('.cc-tf').forEach(btn=>{
 
 function openDrawer(){document.getElementById('drawer').classList.add('open');}
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');}
-
-function sendContactEmail(btn) {
-  const name  = document.getElementById('contactName').value.trim();
-  const email = document.getElementById('contactEmail').value.trim();
-  const msg   = document.getElementById('contactMsg').value.trim();
-  const status= document.getElementById('contactStatus');
-
-  if(!name || !email || !msg) {
-    status.style.display='block';
-    status.style.color='#ff3b57';
-    status.textContent='Please fill in all fields.';
-    return;
-  }
-
-  btn.textContent='Sending...';
-  btn.disabled=true;
-  btn.style.opacity='0.7';
-
-  emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-    from_name:    name,
-    from_email:   email,
-    message:      msg,
-    to_email:     'aungmyatphyo2222@gmail.com',
-  }).then(function() {
-    btn.textContent='Sent ✓';
-    btn.style.background='#00c076';
-    btn.style.opacity='1';
-    btn.disabled=false;
-    status.style.display='block';
-    status.style.color='#00c076';
-    status.textContent='Message sent! I will get back to you soon.';
-    document.getElementById('contactName').value='';
-    document.getElementById('contactEmail').value='';
-    document.getElementById('contactMsg').value='';
-    setTimeout(()=>{
-      btn.textContent='Send Message';
-      btn.style.background='var(--accent)';
-      status.style.display='none';
-    }, 3000);
-  }, function(error) {
-    btn.textContent='Send Message';
-    btn.style.opacity='1';
-    btn.disabled=false;
-    status.style.display='block';
-    status.style.color='#ff3b57';
-    status.textContent='Failed to send. Please try again.';
-    console.error('EmailJS error:', error);
-  });
-}
 
 window.addEventListener('resize',resize);
 renderTickers();
