@@ -244,6 +244,9 @@
     letter-spacing: 0.5px;
   }
 
+  /* ── TICKER STRIP ── */
+  /* ticker removed */
+
   /* ── GRID SECTION ── */
   .section {
     padding: 64px 40px;
@@ -785,161 +788,70 @@
     transition: color 0.15s;
   }
 
-/* ═══════════════════════════════════════
-   MOBILE RESPONSIVE
-═══════════════════════════════════════ */
-@media (max-width: 768px) {
-
-  /* NAV */
-  nav {
-    height: auto;
-    flex-wrap: wrap;
-    padding: 10px 16px;
-    gap: 10px;
+  /* ── CONTACT MODAL ── */
+  #blogContactModal {
+    display:none;position:fixed;inset:0;
+    background:rgba(0,0,0,0.15);
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+    z-index:300;justify-content:flex-end;
   }
-  .logo { font-size: 12px; }
-  .nav-links {
-    gap: 14px;
-    flex-wrap: wrap;
-    order: 3;
-    width: 100%;
-    border-top: 1px solid var(--border);
-    padding-top: 10px;
+  #blogContactModal.open{display:flex;}
+  .bcm-drawer{
+    width:460px;background:#0c0c0c;
+    border-left:1px solid var(--border);
+    height:100%;overflow-y:auto;
+    padding:36px 30px;
+    display:flex;flex-direction:column;gap:20px;
+    animation:bcmIn .22s ease;
   }
-  .nav-link { font-size: 9px; letter-spacing: 1px; }
-
-  /* HERO — stack vertically */
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
+  @keyframes bcmIn{from{transform:translateX(100%);}to{transform:translateX(0);}}
+  .bcm-head{display:flex;align-items:center;justify-content:space-between;}
+  .bcm-title{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--text);}
+  .bcm-close{
+    background:rgba(255,255,255,.04);border:1px solid var(--border);
+    color:var(--muted);width:30px;height:30px;border-radius:5px;
+    cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;
+    transition:all .12s;
   }
-  .hero-content {
-    padding: 32px 20px;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    gap: 24px;
+  .bcm-close:hover{color:var(--text);border-color:var(--accent);}
+  .bcm-lbl{font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+  .bcm-inp{
+    background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;
+    padding:10px 13px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;
+    outline:none;width:100%;transition:border-color .12s;margin-bottom:9px;
   }
-  .hero-headline {
-    font-size: clamp(28px, 8vw, 48px);
-    letter-spacing: -1px;
+  .bcm-inp:focus{border-color:var(--accent);}
+  textarea.bcm-inp{resize:none;height:100px;}
+  .bcm-send{
+    background:var(--accent);border:none;border-radius:5px;padding:12px;width:100%;
+    color:#000;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;
+    letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:opacity .12s;
   }
-  .hero-img-panel {
-    height: auto;
-    min-height: 0;
-  }
-  .hero-img-panel img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    object-position: center top;
-    display: block;
-  }
-  .hero-img-overlay {
-    display: none;
-  }
-  .hero-img-caption {
-    position: static;
-    padding: 14px 20px 20px;
-    background: var(--bg);
-  }
-  .caption-name { font-size: 16px; }
-
-  /* SECTIONS */
-  .section { padding: 36px 16px; }
-  .section-header { margin-bottom: 24px; }
-
-  /* Featured grid — single column */
-  .featured-grid {
-    grid-template-columns: 1fr;
-  }
-  .feat-card {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 20px 16px;
-  }
-  .feat-card:last-child { border-bottom: none; }
-
-  /* Two-col — stack */
-  .two-col {
-    grid-template-columns: 1fr;
-  }
-  .hot-list { border-right: none; }
-  .hot-item { padding: 16px; }
-
-  /* Author sidebar */
-  .author-sidebar { padding: 24px 16px; }
-  .author-stats { grid-template-columns: 1fr 1fr; }
-
-  /* Big story — stack */
-  .big-story {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    margin-top: 32px;
-  }
-  .big-story-content {
-    padding: 28px 20px;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-  .big-story-headline {
-    font-size: clamp(24px, 7vw, 40px);
-    letter-spacing: -1px;
-  }
-  .big-story-img { height: 260px; }
-
-  /* Categories — 2 cols */
-  .categories-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .cat-card {
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 16px;
-  }
-  .cat-card:nth-child(2n) { border-right: none; }
-
-  /* News feed — single column */
-  .news-feed { grid-template-columns: 1fr; }
-  .news-item {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 20px 16px;
-  }
-  .news-item:nth-child(2n) { border-right: none; }
-  .news-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
-  .news-item:last-child { border-bottom: none; }
-
-  /* Footer */
-  footer { padding: 32px 16px 24px; }
-  .footer-top {
-    flex-direction: column;
-    gap: 24px;
-  }
-  .footer-links {
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-headline { font-size: clamp(24px, 9vw, 38px); }
-  .hero-img-panel { height: auto; }
-  .categories-grid { grid-template-columns: 1fr; }
-  .cat-card { border-right: none; }
-  .author-stats { grid-template-columns: 1fr 1fr; }
-  .nav-links { display: none; }
-  .section { padding: 28px 14px; }
-  .featured-grid, .two-col, .news-feed { border-radius: 0; }
-}
+  .bcm-send:hover{opacity:.85;}
+  @media(max-width:768px){.bcm-drawer{width:100vw;padding:24px 18px;}}
 
 </style>
 </head>
 <body>
+
+<!-- CONTACT MODAL -->
+<div id="blogContactModal" onclick="if(event.target===this)closeContactModal()">
+  <div class="bcm-drawer">
+    <div class="bcm-head">
+      <div class="bcm-title">CONTACT</div>
+      <button class="bcm-close" onclick="closeContactModal()">✕</button>
+    </div>
+    <p style="font-size:12px;color:var(--muted);line-height:1.65;">Send a message and I'll get back to you.</p>
+    <div>
+      <div class="bcm-lbl">Send a Message</div>
+      <input id="bcmName"  class="bcm-inp" placeholder="Your Name">
+      <input id="bcmEmail" class="bcm-inp" placeholder="Your Email">
+      <textarea id="bcmMsg" class="bcm-inp" placeholder="Your message..."></textarea>
+      <button class="bcm-send" onclick="sendBlogContact(this)">Send Message</button>
+      <div id="bcmStatus" style="font-family:'Space Mono',monospace;font-size:11px;text-align:center;margin-top:10px;display:none;"></div>
+    </div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -948,7 +860,7 @@
     <a class="nav-link" href="aung-myat-phyo-crypto.html">Dashboard</a>
     <span class="nav-link active">Blog</span>
     <span class="nav-link">Cryptopedia</span>
-    <span class="nav-link">Consulting</span>
+    <span class="nav-link" onclick="openContactModal()">Consulting</span>
     <span class="nav-link">Search</span>
   </div>
 
@@ -1083,9 +995,40 @@
     </div>
   </div>
 </section>
-
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-// No ticker on blog page
+emailjs.init('X-eS-SODGRSuKwvwm');
+
+function openContactModal(){document.getElementById('blogContactModal').classList.add('open');}
+function closeContactModal(){document.getElementById('blogContactModal').classList.remove('open');}
+
+function sendBlogContact(btn){
+  var name=document.getElementById('bcmName').value.trim();
+  var email=document.getElementById('bcmEmail').value.trim();
+  var msg=document.getElementById('bcmMsg').value.trim();
+  var status=document.getElementById('bcmStatus');
+  if(!name||!email||!msg){
+    status.style.display='block';status.style.color='#ff3b57';
+    status.textContent='Please fill in all fields.';return;
+  }
+  btn.textContent='Sending...';btn.disabled=true;btn.style.opacity='0.7';
+  emailjs.send('service_k2zv44h','template_hxlrfgj',{
+    from_name:name,from_email:email,message:msg,to_email:'aungmyatphyo2222@gmail.com'
+  }).then(function(){
+    btn.textContent='Sent ✓';btn.style.background='#00c076';btn.style.opacity='1';btn.disabled=false;
+    status.style.display='block';status.style.color='#00c076';
+    status.textContent='Message sent! I will get back to you soon.';
+    document.getElementById('bcmName').value='';
+    document.getElementById('bcmEmail').value='';
+    document.getElementById('bcmMsg').value='';
+    setTimeout(function(){btn.textContent='Send Message';btn.style.background='var(--accent)';status.style.display='none';},3000);
+  },function(){
+    btn.textContent='Send Message';btn.style.opacity='1';btn.disabled=false;
+    status.style.display='block';status.style.color='#ff3b57';
+    status.textContent='Failed to send. Please try again.';
+  });
+}
 </script>
 </body>
 </html>
