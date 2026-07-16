@@ -831,6 +831,17 @@
   @media(max-width:768px){.bcm-drawer{width:100vw;padding:24px 18px;}}
 
 </style>
+<script>
+// Define globally early so onclick in nav works
+function openContactModal(){
+  var m=document.getElementById('blogContactModal');
+  if(m) m.classList.add('open');
+}
+function closeContactModal(){
+  var m=document.getElementById('blogContactModal');
+  if(m) m.classList.remove('open');
+}
+</script>
 </head>
 <body>
 
