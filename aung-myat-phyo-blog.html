@@ -996,9 +996,16 @@
   </div>
 </section>
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-emailjs.init('X-eS-SODGRSuKwvwm');
+function loadEmailJS(callback){
+  var s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+  s.onload=function(){ emailjs.init('X-eS-SODGRSuKwvwm'); callback(); };
+  s.onerror=function(){ console.warn('EmailJS failed to load'); };
+  document.head.appendChild(s);
+}
+var emailJSReady=false;
+loadEmailJS(function(){ emailJSReady=true; });
 
 function openContactModal(){document.getElementById('blogContactModal').classList.add('open');}
 function closeContactModal(){document.getElementById('blogContactModal').classList.remove('open');}
@@ -1011,6 +1018,10 @@ function sendBlogContact(btn){
   if(!name||!email||!msg){
     status.style.display='block';status.style.color='#ff3b57';
     status.textContent='Please fill in all fields.';return;
+  }
+  if(!emailJSReady||typeof emailjs==='undefined'){
+    status.style.display='block';status.style.color='#ff3b57';
+    status.textContent='Service loading, please try again in a moment.';return;
   }
   btn.textContent='Sending...';btn.disabled=true;btn.style.opacity='0.7';
   emailjs.send('service_k2zv44h','template_hxlrfgj',{
