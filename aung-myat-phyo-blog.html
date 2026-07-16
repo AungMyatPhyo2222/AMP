@@ -830,6 +830,171 @@
   .bcm-send:hover{opacity:.85;}
   @media(max-width:768px){.bcm-drawer{width:100vw;padding:24px 18px;}}
 
+/* ══════════════════════════════════
+   BLOG MOBILE RESPONSIVE
+══════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* NAV */
+  nav {
+    height: auto !important;
+    padding: 10px 14px !important;
+    flex-wrap: nowrap !important;
+    gap: 0 !important;
+    overflow: hidden;
+  }
+  .logo {
+    font-size: 11px !important;
+    flex-shrink: 0;
+    margin-right: 10px;
+  }
+  .nav-links {
+    gap: 10px !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-link { font-size: 8px !important; letter-spacing: 0.5px !important; white-space: nowrap; }
+  .live-badge { display: none; }
+
+  /* HERO — stack vertically */
+  .hero {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+  }
+  .hero-content {
+    padding: 24px 16px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+    gap: 20px !important;
+  }
+  .hero-eyebrow { margin-bottom: 16px !important; }
+  .eyebrow-tag { font-size: 8px !important; }
+  .eyebrow-date { font-size: 9px !important; }
+  .hero-headline {
+    font-size: clamp(32px, 9vw, 48px) !important;
+    letter-spacing: -1px !important;
+    line-height: 1.05 !important;
+    margin-bottom: 20px !important;
+  }
+  .author-avatar { width: 30px !important; height: 30px !important; }
+  .author-name { font-size: 11px !important; }
+  .author-title-sm { font-size: 10px !important; }
+  .read-time { font-size: 9px !important; }
+
+  /* Hero image — show full, no crop */
+  .hero-img-panel {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .hero-img-panel img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    object-position: center top !important;
+    display: block !important;
+  }
+  .hero-img-overlay { display: none !important; }
+  .hero-img-caption {
+    position: static !important;
+    padding: 12px 16px 16px !important;
+    background: var(--bg) !important;
+  }
+  .caption-name { font-size: 15px !important; }
+  .caption-sub { font-size: 10px !important; }
+
+  /* SECTIONS */
+  .section { padding: 28px 14px !important; }
+  .section-header { margin-bottom: 20px !important; }
+  .section-title { font-size: 9px !important; }
+
+  /* Featured grid — single column */
+  .featured-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .feat-card {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding: 18px 14px !important;
+  }
+  .feat-card:last-child { border-bottom: none !important; }
+  .feat-title { font-size: 15px !important; }
+  .feat-excerpt { font-size: 12px !important; }
+
+  /* Two-col layout — stack */
+  .two-col {
+    grid-template-columns: 1fr !important;
+  }
+  .hot-list { border-right: none !important; }
+  .hot-item { padding: 14px !important; }
+  .hot-title { font-size: 13px !important; }
+
+  /* Author sidebar */
+  .author-sidebar { padding: 20px 14px !important; }
+  .author-stats { grid-template-columns: 1fr 1fr !important; }
+  .stat-pill-val { font-size: 16px !important; }
+  .social-row { flex-wrap: wrap !important; gap: 8px !important; }
+  .social-pill { font-size: 10px !important; padding: 7px 10px !important; }
+
+  /* Big story — stack */
+  .big-story {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+    margin-top: 24px !important;
+  }
+  .big-story-content {
+    padding: 20px 14px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+  .big-story-headline {
+    font-size: clamp(22px, 7vw, 36px) !important;
+    letter-spacing: -0.5px !important;
+  }
+  .big-story-body { font-size: 13px !important; }
+  .big-story-img { height: 220px !important; }
+
+  /* Categories — 2 columns */
+  .categories-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .cat-card {
+    border-bottom: 1px solid var(--border) !important;
+    padding: 16px 12px !important;
+  }
+  .cat-card:nth-child(odd) { border-right: 1px solid var(--border) !important; }
+  .cat-card:nth-child(even) { border-right: none !important; }
+  .cat-name { font-size: 10px !important; }
+
+  /* News feed — single column */
+  .news-feed { grid-template-columns: 1fr !important; }
+  .news-item {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding: 16px 14px !important;
+  }
+  .news-item:last-child { border-bottom: none !important; }
+  .news-title { font-size: 14px !important; }
+  .news-excerpt { font-size: 11px !important; }
+
+  /* Footer */
+  footer { padding: 28px 14px 20px !important; }
+  .footer-top { flex-direction: column !important; gap: 20px !important; }
+  .footer-brand { font-size: 16px !important; }
+  .footer-links { flex-wrap: wrap !important; gap: 12px !important; }
+  .footer-bottom { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
+  .footer-copy { font-size: 9px !important; }
+}
+
+@media (max-width: 400px) {
+  .hero-headline { font-size: clamp(28px, 10vw, 40px) !important; }
+  .nav-link { font-size: 7px !important; }
+  .categories-grid { grid-template-columns: 1fr !important; }
+  .cat-card { border-right: none !important; }
+}
+
 </style>
 <script>
 function openContactModal(){
@@ -854,7 +1019,7 @@ function sendBlogContact(btn){
     status.textContent='Service loading, please try again in a moment.';return;
   }
   btn.textContent='Sending...';btn.disabled=true;btn.style.opacity='0.7';
-  emailjs.send('service_k2zv44h','template_hxlrfgj',{
+  emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID',{
     from_name:name,from_email:email,message:msg,to_email:'aungmyatphyo2222@gmail.com'
   }).then(function(){
     btn.textContent='Sent ✓';btn.style.background='#00c076';btn.style.opacity='1';btn.disabled=false;
@@ -899,8 +1064,6 @@ function sendBlogContact(btn){
   <div class="nav-links">
     <a class="nav-link" href="aung-myat-phyo-crypto.html">Dashboard</a>
     <span class="nav-link active">Blog</span>
-    <span class="nav-link">Cryptopedia</span>
-    <span class="nav-link" onclick="openContactModal()">Consulting</span>
     <span class="nav-link">Search</span>
   </div>
 
@@ -1040,7 +1203,7 @@ function sendBlogContact(btn){
 function loadEmailJS(callback){
   var s=document.createElement('script');
   s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-  s.onload=function(){ emailjs.init('X-eS-SODGRSuKwvwm'); callback(); };
+  s.onload=function(){ emailjs.init('YOUR_EMAILJS_PUBLIC_KEY'); callback(); };
   s.onerror=function(){ console.warn('EmailJS failed to load'); };
   document.head.appendChild(s);
 }
